@@ -6,13 +6,18 @@ import com.stringnull.rapidparcela.models.ShippingDetails;
 import com.stringnull.rapidparcela.models.ShippingStatus;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
+
 public class ShippingDTOResponse {
 
     private long id;

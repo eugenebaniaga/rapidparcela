@@ -1,6 +1,7 @@
 package com.stringnull.rapidparcela.models;
 
 import jakarta.persistence.*;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,8 +12,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
-@Getter
-@Setter
+@Data
 @Entity
 @Table(name = "shipping")
 public class Shipping {
@@ -26,11 +26,11 @@ public class Shipping {
     private BigDecimal amount;
 
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "shipping_details_id")
     private ShippingDetails shippingDetails = new ShippingDetails();
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "shipping_status_id")
     private ShippingStatus shippingStatus = new ShippingStatus();
 

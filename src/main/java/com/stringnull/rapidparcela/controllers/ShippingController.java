@@ -23,12 +23,22 @@ public class ShippingController {
     @PostMapping(path="/add")
     public ResponseEntity<ApiResponse<?>> createShipping(@Valid @RequestBody ShippingDTORequest shipping) {
         ApiResponse<?> resp = new ApiResponse<>().error("something happens...");
-        try{
-            resp = shippingService.saveShipping(shipping);
-        }catch(Exception e) {
-            System.out.println("something happens");
-        }
+        resp = shippingService.saveShipping(shipping);
         return ResponseEntity.ok(resp);
     }
 
+    @DeleteMapping(path="/{id}")
+    public ResponseEntity<ApiResponse<?>> deleteShippingById(@PathVariable long id) {
+        return ResponseEntity.ok(shippingService.deleteShippingById(id));
+    }
+
+    @GetMapping(path="/{id}")
+    public ResponseEntity<ApiResponse<?>> getShippingById(@PathVariable long id) {
+        return ResponseEntity.ok(shippingService.getShippingById(id));
+    }
+
+    @PutMapping(path = "/{id}")
+    public ResponseEntity<ApiResponse<?>> updateShipping(@PathVariable long id, @Valid @RequestBody ShippingDTORequest shippingDTORequest) {
+        return ResponseEntity.ok(shippingService.updateShipping(id, shippingDTORequest));
+    }
 }

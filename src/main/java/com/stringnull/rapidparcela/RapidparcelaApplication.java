@@ -2,6 +2,9 @@ package com.stringnull.rapidparcela;
 
 import com.stringnull.rapidparcela.models.Customer;
 import com.stringnull.rapidparcela.models.Shipping;
+import com.stringnull.rapidparcela.models.ShippingDetails;
+import com.stringnull.rapidparcela.models.ShippingStatus;
+import com.stringnull.rapidparcela.models.embeddables.Location;
 import com.stringnull.rapidparcela.repositories.CustomerRepository;
 import com.stringnull.rapidparcela.repositories.ShippingRepository;
 import org.modelmapper.ModelMapper;
@@ -13,6 +16,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.Optional;
 
 @SpringBootApplication
@@ -36,6 +41,21 @@ public class RapidparcelaApplication {
 			customer.setShippings(null);
 			Customer savedCustomer  = customerRepository.save(customer);
 
+			//shipping status
+			ShippingStatus shippingStatus = new ShippingStatus();
+			shippingStatus.setStatus("Outbound for Deliver");
+			shippingStatus.setCreatedAt(LocalDateTime.now());
+			Location current = new Location();
+			current.setLatitude(25.2084);
+			current.setLongitude(55.2719);
+			shippingStatus.setCurrent(current);
+			shippingStatus.setDestination(current);
+
+			ShippingDetails shippingDetails = new ShippingDetails();
+			shippingDetails.setAmount(BigDecimal.valueOf(1500));
+			shippingDetails.setItemDetails("military supply");
+			shippingDetails.setQuantity(2);
+			shippingDetails.setItemName("Supply");
 
 			//add shipping...
 			Shipping shipping = new Shipping();
@@ -43,9 +63,11 @@ public class RapidparcelaApplication {
 			shipping.setReferenceNumber("11113433");
 			shipping.setCustomer(savedCustomer);
 			shipping.setDeliveryPersonel(null);
-			shipping.setShippingDetails(null);
-			shipping.setShippingStatus(null);
+			shipping.setShippingDetails(shippingDetails);
+			shipping.setShippingStatus(shippingStatus);
 			shippingRepository.save(shipping);
+
+
 
 			//Optional<Customer> findCust = customerRepository.findById(Long.valueOf(1));
 			//System.out.println("Customer id:1 " + findCust.toString());
